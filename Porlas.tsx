@@ -1,49 +1,139 @@
-import { IPeople } from "@/src/interfaces/IPeople";
+import {
+  fetchMultipleResourceNames,
+} from "@/src/actions/get-info";
+import { getFilms } from "@/src/actions/films/get-film";
 import Link from "next/link";
-import React from "react";
 
-interface IWeatherCard {
-  person: IPeople;
+interface Props {
+  params: {
+    title: string; 
+  };
 }
 
-const PersonCard2: React.FC<IWeatherCard> = ({ person }) => {
+export default async function FilmPage({ params }: Props) {
+  const decodedTitle = decodeURIComponent(params.title);
+  const films = await getFilms(decodedTitle);
+  const film = films.find(
+    (p) => p.title.toLowerCase() === decodedTitle.toLowerCase()
+  );
+
+  if (!film) {
+    return (
+      <div
+        className="flex min-h-screen justify-center items-center bg-cover bg-center"
+        style={{ backgroundImage: `url('/imagen-difuminada.png')` }}
+      >
+        <h1 className="text-white text-3xl font-bold">
+          Película no encontrada
+        </h1>
+      </div>
+    );
+  }
+
+ 
+  const charactersNames = await fetchMultipleResourceNames(film.characters);
+  const planetsNames = await fetchMultipleResourceNames(film.planets);
+  const starshipsNames = await fetchMultipleResourceNames(film.starships);
+  const vehiclesNames = await fetchMultipleResourceNames(film.vehicles);
+  const speciesNames = await fetchMultipleResourceNames(film.species);
+
   return (
-    <div className="relative group group-hover:scale-110">
-      {/* Cuadrado inicial */}
-      <div className="card w-48 h-20 bg-blue-400 transition-all duration-400 rounded-lg shadow-lg relative overflow-hidden z-10 flex items-center justify-center group-hover:rounded-none">
-        <h2 className="text-white font-bold">{person.name}</h2>
-      </div>
-
-      {/* Cuadrado adicional superior */}
-      <div className="absolute top-full left-0 right-0 transition-all duration-300 transform -translate-y-full bg-white rounded-lg shadow-lg h-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 flex flex-col items-center justify-center group-hover:rounded-b-lg group-hover:rounded-t-none">
-        <div className="flex space-x-6 text-black justify-center items-center">
-          <div className="flex flex-col justify-center items-center">
-            <span className="font-bold">🌎 Planeta</span>
-            <span>{person.homeworld}</span>
-          </div>
-        </div>
-
-        {/* Botón para más información */}
-        <Link href={`/people/${person.name}`} className="bg-blue-600 text-white font-semibold rounded-lg p-2 absolute top-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group-hover:opacity-100 opacity-0 transition-all duration-300 text-xs">
-          Más info
+    <div
+      className="flex min-h-screen bg-cover bg-center relative"
+      style={{
+        backgroundImage: `url('/imagen-difuminada.png')`,
+      }}
+    >
+      <div className="bg-green-500 md:w-[800px] h-auto p-8 flex flex-col justify-center items-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[12px]">
+        <Link
+          href="/films"
+          className="absolute top-6 left-10 hover:bg-green-600 transition-shadow rounded-full px-3 py-2 flex items-center justify-center "
+        >
+          <span className="text-white text-3xl text-center">&larr;</span>{" "}
+          
         </Link>
-      </div>
+        <h1 className="text-white text-3xl font-bold mb-6 animate__animated animate__flipInX">{film.title}</h1>
 
-      {/* Cuadrado adicional inferior */}
-      <div className="absolute bottom-full space-x-2 left-0 right-0 transition-all duration-300 transform translate-y-full bg-white rounded-lg shadow-lg h-20 opacity-0 group-hover:-translate-y-0 group-hover:opacity-100 flex items-center justify-center z-20 rounded-md group-hover:rounded-t-lg group-hover:rounded-b-none">
-        <div className="flex space-x-6 text-black justify-center items-center">
-          <div className="flex space-x-2 flex-col justify-center items-center">
-            <span className="font-bold">📏 Altura</span>
-            <span>{person.height} cm</span>
+        <div className="grid md:grid-cols-2 gap-x-6 gap-y-4 w-full text-white text-lg animate__animated animate__flipInX">
+          <div className="space-y-6">
+            <div className="flex flex-col">
+              <span className="font-bold text-center">
+                Información de la película
+              </span>
+              <div className="border-b border-gray-300"></div>
+              <div className="flex flex-col mt-2">
+                <div>
+                  <span className="font-bold text-gray-100">
+                    ID de episodio:{" "}
+                  </span>
+                  <span className="text-gray-100">{film.episode_id}</span>
+                </div>
+                <div>
+                  <span className="font-bold text-gray-100">Director: </span>
+                  <span className="text-gray-100">{film.director}</span>
+                </div>
+                <div>
+                  <span className="font-bold text-gray-100">Productor: </span>
+                  <span className="text-gray-100">{film.producer}</span>
+                </div>
+                <div>
+                  <span className="font-bold text-gray-100">
+                    Fecha de lanzamiento:{" "}
+                  </span>
+                  <span className="text-gray-100">{film.release_date}</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-center">
+                Información de creación
+              </span>
+              <div className="border-b border-gray-300"></div>
+              <div className="flex flex-col mt-2">
+                <div>
+                  <span className="font-bold text-gray-100">Creado en: </span>
+                  <span>{film.created}</span>
+                </div>
+                <div>
+                  <span className="font-bold text-gray-100">
+                    Última edición:{" "}
+                  </span>
+                  <span>{film.edited}</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col justify-center items-center">
-            <span className="font-bold">⚖️ Peso</span>
-            <span>{person.mass} Kg</span>
+
+          <div className="flex flex-col">
+            <span className="font-bold text-center">Detalles adicionales</span>
+            <div className="border-b border-gray-300"></div>
+            <div className="flex flex-col mt-2">
+              <div>
+                <span className="font-bold text-gray-100">Personajes: </span>
+                <span>{charactersNames.join(", ") || "N/A"}</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-100">Planetas: </span>
+                <span>{planetsNames.join(", ") || "N/A"}</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-100">
+                  Naves espaciales:{" "}
+                </span>
+                <span>{starshipsNames.join(", ") || "N/A"}</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-100">Vehículos: </span>
+                <span>{vehiclesNames.join(", ") || "N/A"}</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-100">Especies: </span>
+                <span>{speciesNames.join(", ") || "N/A"}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default PersonCard2;
+}

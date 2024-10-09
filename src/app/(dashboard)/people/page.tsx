@@ -71,7 +71,7 @@ export default function PeoplePage() {
             />
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-y-4 md:gap-y-[102px] gap-x-10 justify-center items-center md:mt-[90px] animate__animated animate__zoomIn animate__delay-0.3s">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-y-4 md:gap-y-[102px] gap-x-10 justify-center items-center mt-6 md:mt-[90px] animate__animated animate__zoomIn animate__delay-0.3s">
             {currentPeople.map((person, index) => (
               <PersonCard2 key={index} person={person} />
             ))}
