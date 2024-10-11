@@ -2,7 +2,7 @@
 
 ### **README del Frontend (React/Next.js + TypeScript)**
 
-```markdown
+
 # Star Wars API - Frontend
 
 Este es el frontend de la aplicación que consume la API de Star Wars. Está desarrollado con **React** y **Next.js**, y muestra las entidades `People`, `Films`, `Starships` y `Planets` con funcionalidades de búsqueda y paginación .
