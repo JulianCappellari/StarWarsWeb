@@ -26,53 +26,52 @@ export default async function StarshipNamePage({ params }: Props) {
     );
   }
 
-  
   const pilotsNames = await fetchMultipleResourceNames(starship.pilots);
+
   const filmsNames = await fetchMultipleResourceNames(starship.films);
 
   return (
     <div
-      className="flex min-h-screen bg-cover bg-center relative"
+      className="flex flex-col min-h-screen bg-cover bg-center relative"
       style={{
         backgroundImage: `url('/imagen-difuminada.png')`,
       }}
     >
-      <div className="bg-orange-500 w-[800px] h-auto p-8 flex flex-col justify-center items-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[12px]">
+      <div className="bg-orange-500 w-full sm:w-[600px] md:w-[800px] h-auto p-4 sm:p-6 sm:mx-auto md:mx-0 mt-10 mb-10 flex flex-col justify-center items-center md:absolute md:left-1/2 md:top-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-[12px]">
         <Link
           href="/starships"
-          className="absolute top-6 left-10 hover:bg-orange-600 transition-shadow rounded-full px-3 py-2 flex items-center justify-center"
+          className="absolute top-12 md:top-6 left-2 hover:bg-orange-600 transition-shadow rounded-full px-3 py-2 flex items-center justify-center"
         >
-          <span className="text-white text-3xl text-center ">&larr;</span>{" "}
-          
+          <span className="text-white text-3xl text-center">&larr;</span>
         </Link>
-        <h1 className="text-white text-3xl font-bold mb-6  animate__animated animate__flipInX">
+        <h1 className="text-white text-3xl font-bold mb-6 animate__animated animate__flipInX">
           {starship.name}
         </h1>
 
-        <div className="grid md:grid-cols-2 gap-x-6 gap-y-4 w-full text-white text-lg animate__animated animate__flipInX">
-          <div className="flex flex-col">
-            <span className="font-bold text-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-white text-lg animate__animated animate__flipInX">
+          <div className="flex flex-col md:col-span-1">
+            <span className="font-bold text-center mb-2">
               Información de la nave
             </span>
-            <div className="border-b border-gray-300"></div>
-            <div className="flex flex-col mt-2">
-              <div>
+            <div className="border-b border-gray-300 mb-4"></div>
+            <div className="flex flex-col">
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Modelo: </span>
                 <span className="text-gray-100">{starship.model}</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Fabricante: </span>
                 <span>{starship.manufacturer}</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Costo: </span>
                 <span>{starship.cost_in_credits} créditos</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Longitud: </span>
                 <span>{starship.length} m</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">
                   Velocidad máxima:{" "}
                 </span>
@@ -81,63 +80,67 @@ export default async function StarshipNamePage({ params }: Props) {
             </div>
           </div>
 
-          <div className="flex flex-col">
-            <span className="font-bold text-center">Información adicional</span>
-            <div className="border-b border-gray-300"></div>
-            <div className="flex flex-col mt-2">
-              <div>
+          <div className="flex flex-col md:col-span-1">
+            <span className="font-bold text-center mb-2">
+              Información adicional
+            </span>
+            <div className="border-b border-gray-300 mb-4"></div>
+            <div className="flex flex-col">
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Tripulación: </span>
                 <span className="text-gray-100">{starship.crew}</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Pasajeros: </span>
                 <span>{starship.passengers}</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">
                   Capacidad de carga:{" "}
                 </span>
                 <span>{starship.cargo_capacity} kg</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Consumibles: </span>
                 <span>{starship.consumables}</span>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col">
-            <span className="font-bold text-center">Clasificación y otros</span>
-            <div className="border-b border-gray-300"></div>
-            <div className="flex flex-col mt-2">
-              <div>
+          <div className="flex flex-col md:col-span-1">
+            <span className="font-bold text-center mb-2">
+              Clasificación y otros
+            </span>
+            <div className="border-b border-gray-300 mb-4"></div>
+            <div className="flex flex-col">
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Clasificación: </span>
                 <span>{starship.starship_class}</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">
                   Calificación de hipernave:{" "}
                 </span>
                 <span>{starship.hyperdrive_rating}</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">MGLT: </span>
                 <span>{starship.MGLT}</span>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col">
-            <span className="font-bold text-center">
+          <div className="flex flex-col md:col-span-1 md:row-start-1">
+            <span className="font-bold text-center mb-2">
               Información de creación
             </span>
-            <div className="border-b border-gray-300"></div>
-            <div className="flex flex-col mt-2">
-              <div>
+            <div className="border-b border-gray-300 mb-4"></div>
+            <div className="flex flex-col">
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">Creado en: </span>
                 <span>{starship.created}</span>
               </div>
-              <div>
+              <div className="mb-2">
                 <span className="font-bold text-gray-100">
                   Última edición:{" "}
                 </span>

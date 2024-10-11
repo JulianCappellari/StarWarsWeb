@@ -11,7 +11,7 @@ const StarshipCard: React.FC<IStarshipCard> = ({ starship }) => {
     <div className="relative group group-hover:scale-110 text-center">
       <Link
         href={`/starships/${starship.name}`}
-        className="card w-40 h-12 bg-orange-400 transition-all duration-400 rounded-lg shadow-lg relative overflow-hidden z-10 flex items-center justify-center group-hover:rounded-lg md:group-hover:rounded-none"
+        className="card w-40 h-12 md:w-48 md:h-20 bg-orange-500 transition-all duration-400 rounded-lg shadow-lg relative overflow-hidden z-10 flex items-center justify-center group-hover:rounded-lg md:group-hover:rounded-none"
       >
         <h2 className="text-white font-bold">{starship.name}</h2>
       </Link>

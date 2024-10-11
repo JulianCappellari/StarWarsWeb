@@ -17,10 +17,10 @@ const HomePage: React.FC = () => {
           Explora la información sobre las entidades de Star Wars.
         </p>
         <div className="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
-          <Button title="Personajes" link="/people" />
-          <Button title="Peliculas" link="/films" />
-          <Button title="Planetas" link="/planets" />
-          <Button title="Naves" link="/starships" />
+          <Button title="Personajes" link="/people" color="blue" />
+          <Button title="Peliculas" link="/films"  color="green"/>
+          <Button title="Planetas" link="/planets" color="orange"/>
+          <Button title="Naves" link="/starships" color="red"/>
         </div>
       </div>
     </div>

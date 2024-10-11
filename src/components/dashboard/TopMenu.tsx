@@ -10,12 +10,11 @@ const items = [
   { label: 'Naves', link: '/starships' },
   { label: 'Planetas', link: '/planets' },
 ];
+
 const TopMenu: React.FC = () => {
   const pathname = usePathname(); 
   const [activeIndex, setActiveIndex] = useState(0);
 
-
-  
   useEffect(() => {
     const index = items.findIndex(item => item.link === pathname); 
     setActiveIndex(index !== -1 ? index : 0); 
@@ -23,7 +22,7 @@ const TopMenu: React.FC = () => {
 
   return (
     <nav className="bg-gray-400 text-gray-300 rounded-lg">
-      <div className="hidden md:blockabsolute left-4 top-12 transform -translate-y-1/2">
+      <div className="hidden md:block absolute left-4 top-12 transform -translate-y-1/2">
         <Link href="/" className="px-4 py-2 cursor-pointer text-white underline hover:text-gray-400">
           Inicio
         </Link>
