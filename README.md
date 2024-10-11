@@ -21,5 +21,5 @@ Este es el frontend de la aplicación que consume la API de Star Wars. Está des
 - **Axios** para las peticiones HTTP.
 - **Tailwind CSS** para los estilos.
 
-# Para visitar la pagina solo tiene que hacer click aca: https://star-wars-web-mauve.vercel.app/
+### Para visitar la pagina solo tiene que hacer click aca: https://star-wars-web-mauve.vercel.app/
 
