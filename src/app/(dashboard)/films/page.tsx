@@ -43,7 +43,7 @@ export default function FilmsPage() {
     <div
       className="flex min-h-screen bg-cover bg-center relative"
       style={{
-        backgroundImage: `url('/imagen-difuminada.png')`,
+        backgroundImage: `url('/imagen-difuminada-compress.webp')`,
       }}
     >
       <div className="absolute inset-0 bg-black opacity-50 backdrop-blur-lg" />

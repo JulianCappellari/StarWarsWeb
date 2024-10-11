@@ -46,7 +46,7 @@ export default function PeoplePage() {
     <div
       className="flex min-h-screen bg-cover bg-center relative"
       style={{
-        backgroundImage: `url('/imagen-difuminada.png')`,
+        backgroundImage: `url('/imagen-difuminada-compress.webp')`,
       }}
     >
       

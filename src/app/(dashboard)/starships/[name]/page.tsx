@@ -19,7 +19,7 @@ export default async function StarshipNamePage({ params }: Props) {
     return (
       <div
         className="flex min-h-screen justify-center items-center bg-cover bg-center"
-        style={{ backgroundImage: `url('/imagen-difuminada.png')` }}
+        style={{ backgroundImage: `url('/imagen-difuminada-compress.webp')` }}
       >
         <h1 className="text-white text-3xl font-bold">Nave no encontrada</h1>
       </div>
@@ -34,7 +34,7 @@ export default async function StarshipNamePage({ params }: Props) {
     <div
       className="flex flex-col min-h-screen bg-cover bg-center relative"
       style={{
-        backgroundImage: `url('/imagen-difuminada.png')`,
+        backgroundImage: `url('/imagen-difuminada-compress.webp')`,
       }}
     >
       <div className="bg-orange-500 w-full sm:w-[600px] md:w-[800px] h-auto p-4 sm:p-6 sm:mx-auto md:mx-0 mt-10 mb-10 flex flex-col justify-center items-center md:absolute md:left-1/2 md:top-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-[12px]">

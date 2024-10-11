@@ -7,7 +7,7 @@ const HomePage: React.FC = () => {
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: `url('/image-dashborad.jpg')` }} 
+      style={{ backgroundImage: `url('/image-dashborad-compress.webp')` }} 
     >
       <div className="bg-slate-800/80 text-white p-6 md:p-8 rounded-lg shadow-lg shadow-slate-600 flex flex-col items-center justify-center space-y-4 md:space-y-6 max-w-[700px] w-full mx-4 md:mx-auto">
         <h1 className="text-xl md:text-2xl font-bold text-center">
