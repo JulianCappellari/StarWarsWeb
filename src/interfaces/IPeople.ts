@@ -9,11 +9,11 @@ export interface IPeople {
     eye_color: string;
     birth_year: string;
     gender: string;
-    homeworld: string; // Relación con el planeta
-    films: string[];   // Relación con películas
+    homeworld: string;  
+    films: string[];   
     species: string[]; 
     vehicles: string[]; 
-    starships: string[]; // Relación con naves espaciales
+    starships: string[]; 
     created: string;
     edited: string;
     url: string;

@@ -1,4 +1,4 @@
-// src/pages/index.tsx
+
 
 import Button from "@/src/components/dashboard/Button";
 import React from "react";

@@ -4,7 +4,8 @@ import { IPlanet } from "@/src/interfaces/IPlanet";
 
 export const getPlanets = async (name?: string): Promise<IPlanet[]> => {
   // const apiUrl = "http://localhost:3001/api/planets";
-  const apiUrl = "https://starwarsapi-xop3.onrender.com/api/planets";
+  const urlBack = process.env.CONECCION_BACK;
+  const apiUrl = `${urlBack}/api/planets`;
 
   try {
     const params = name ? { name } : {};

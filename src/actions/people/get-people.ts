@@ -4,7 +4,8 @@ import { IPeople } from "@/src/interfaces/IPeople";
 
 export const getPeople = async (name?: string): Promise<IPeople[]> => {
   // const apiUrl = "http://localhost:3001/api/people";
-  const apiUrl = "https://starwarsapi-xop3.onrender.com/api/people";
+  const urlBack = process.env.CONECCION_BACK;
+  const apiUrl = `${urlBack}/api/people`;
 
   try {
     const params = name ? { name } : {};

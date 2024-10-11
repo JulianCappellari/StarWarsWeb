@@ -4,7 +4,8 @@ import { IStarship } from "@/src/interfaces/IStarship";
 
 export const getStarship = async (name?: string): Promise<IStarship[]> => {
   // const apiUrl = "http://localhost:3001/api/starships";
-  const apiUrl = "https://starwarsapi-xop3.onrender.com/api/starships";
+  const urlBack = process.env.CONECCION_BACK;
+  const apiUrl = `${urlBack}/api/starships`;
 
   try {
     const params = name ? { name } : {};
