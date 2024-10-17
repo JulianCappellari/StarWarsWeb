@@ -2,21 +2,31 @@ import { fetchMultipleResourceNames, fetchResourceName } from "@/src/actions/get
 import { getPeople } from "@/src/actions/people/get-people"; 
 import Link from "next/link";
 
+
 interface Props { 
   params: { name: string; }; 
+  
 }
 
-export default async function PeopleNamePage({ params }: Props) { 
-  const decodedName = decodeURIComponent(params.name); 
-  const people = await getPeople(decodedName); 
-  const person = people.find((p) => p.name.toLowerCase() === decodedName.toLowerCase());
+export default async function PeopleNamePage({params}:Props) {
+  
+  
+  const decodedName = decodeURIComponent(params.name);
+  const persons = await getPeople(decodedName);
+  const person = persons.find(
+    (s) => s.name.toLowerCase() === decodedName.toLowerCase()
+  ); 
+  
 
-  if (!person) { 
-    return ( 
-      <div className="flex min-h-screen justify-center items-center bg-cover bg-center" style={{ backgroundImage: 'url(/imagen-difuminada-compress.webp)' }}> 
-        <h1 className="text-white text-3xl font-bold">Persona no encontrada</h1> 
-      </div> 
-    ); 
+  if (!person) {
+    return (
+      <div
+        className="flex min-h-screen justify-center items-center bg-cover bg-center"
+        style={{ backgroundImage: 'url(/imagen-difuminada-compress.webp)' }}
+      >
+        <h1 className="text-white text-3xl font-bold">Película no encontrada</h1>
+      </div>
+    );
   }
 
   const homeworldName = await fetchResourceName(person.homeworld); 

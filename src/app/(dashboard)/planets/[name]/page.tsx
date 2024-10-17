@@ -6,15 +6,16 @@ interface Props {
   params: {
     name: string;
   };
+  
 }
 
 export default async function PlanetNamePage({ params }: Props) {
+  
   const decodedName = decodeURIComponent(params.name);
   const planets = await getPlanets(decodedName);
   const planet = planets.find(
-    (p) => p.name.toLowerCase() === decodedName.toLowerCase()
-  );
-
+    (s) => s.name.toLowerCase() === decodedName.toLowerCase()
+  ); 
   if (!planet) {
     return (
       <div
@@ -97,7 +98,7 @@ export default async function PlanetNamePage({ params }: Props) {
           </div>
         </div>
 
-        {/* Información de creación */}
+        
         <div className="flex flex-col mt-4">
           <span className="font-bold text-center mb-2">Información de creación</span>
           <div className="border-b border-gray-300 mb-4"></div>
@@ -116,3 +117,4 @@ export default async function PlanetNamePage({ params }: Props) {
     </div>
   );
 }
+

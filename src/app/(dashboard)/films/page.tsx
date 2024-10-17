@@ -1,43 +1,23 @@
 "use client";
 import TopMenu from "@/src/components/dashboard/TopMenu";
-import { useEffect, useState } from "react";
-import { IFilm } from "@/src/interfaces/IFilm";
 import FilmCard from "@/src/components/film/FilmCard";
 import { getFilms } from "@/src/actions/films/get-film";
-import {
-  Pagination,
-  PaginationItem,
-  PaginationList,
-  PaginationNavigator,
-} from "keep-react";
-import { CaretLeft, CaretRight } from "phosphor-react";
+import LoadingCard from "@/src/components/LoadingCard";
+import { useData } from "@/src/hook/useData";
+import { useState } from "react";
+import PaginationComponent from "@/src/components/PaginationComponent";
 
 const ITEMS_PER_PAGE = 5;
 
 export default function FilmsPage() {
-  const [filmsData, setFilmsData] = useState<IFilm[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getFilms();
-      setFilmsData(data);
-    }
-    fetchData();
-  }, []);
-
-  const filteredFilms = filmsData.filter((film) =>
-    film.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const totalPages = Math.ceil(filteredFilms.length / ITEMS_PER_PAGE);
-
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentFilms = filteredFilms.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
+  const {
+    loading,
+    currentData: currentFilms,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+  } = useData(getFilms, searchTerm, ITEMS_PER_PAGE);
 
   return (
     <div
@@ -65,44 +45,23 @@ export default function FilmsPage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-y-4 md:gap-y-[102px] gap-x-10 justify-center items-center mt-6 md:mt-[90px] animate__animated animate__zoomIn animate__delay-0.3s">
-            {currentFilms.map((film, index) => (
-              <FilmCard key={index} film={film} />
-            ))}
+            {loading
+              ? Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+                  <LoadingCard key={index} />
+                ))
+              : currentFilms.map((film, index) => (
+                  <FilmCard key={index} film={film} />
+                ))}
           </div>
 
-          <div className="flex justify-center mt-[110px]">
-            <Pagination shape="rounded">
-              <PaginationNavigator
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              >
-                <CaretLeft size={18} />
-                Anterior
-              </PaginationNavigator>
-              <PaginationList>
-                {Array.from({ length: totalPages }, (_, index) => {
-                  const isActive = currentPage === index + 1;
-                  return (
-                    <PaginationItem
-                      key={index}
-                      active={isActive}
-                      className={isActive ? "text-green-500" : "text-gray-300"}
-                      onClick={() => setCurrentPage(index + 1)}
-                    >
-                      {index + 1}
-                    </PaginationItem>
-                  );
-                })}
-              </PaginationList>
-              <PaginationNavigator
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-              >
-                Siguiente
-                <CaretRight size={18} />
-              </PaginationNavigator>
-            </Pagination>
-          </div>
+          {!loading && (
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+              color="green"
+            />
+          )}
         </div>
       </div>
     </div>

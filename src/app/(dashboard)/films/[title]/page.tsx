@@ -2,15 +2,20 @@ import { fetchMultipleResourceNames } from "@/src/actions/get-info";
 import { getFilms } from "@/src/actions/films/get-film";
 import Link from "next/link";
 
+
 interface Props {
   params: { title: string };
+  
 }
 
-export default async function FilmPage({ params }: Props) {
-  const decodedTitle = decodeURIComponent(params.title);
-  const films = await getFilms(decodedTitle);
-  const film = films.find((p) => p.title.toLowerCase() === decodedTitle.toLowerCase());
+export default async function FilmPage({  params }: Props) {
 
+  const decodedName = decodeURIComponent(params.title);
+  const films = await getFilms(decodedName);
+  const film = films.find(
+    (s) => s.title.toLowerCase() === decodedName.toLowerCase()
+  ); 
+  
   if (!film) {
     return (
       <div
@@ -96,7 +101,7 @@ export default async function FilmPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Información de creación */}
+        
         <div className="flex flex-col mt-4">
           <span className="font-bold text-center mb-2">Información de creación</span>
           <div className="border-b border-gray-300 mb-4"></div>

@@ -16,7 +16,7 @@ const FilmCard: React.FC<IFilmCard> = ({ film }) => {
         <h2 className="text-white font-bold">{film.title}</h2>
       </Link>
 
-      {/* Cuadro de información que aparece al hacer hover (visibilidad en móvil) */}
+      
       <div className="absolute top-full left-0 right-0 transition-all duration-300 transform -translate-y-full bg-white rounded-lg shadow-lg h-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 flex flex-col items-center justify-center group-hover:rounded-b-lg group-hover:rounded-t-none hidden md:flex">
         <div className="flex space-x-6 text-black justify-center items-center">
           <div className="flex flex-col justify-center items-center">
@@ -33,7 +33,7 @@ const FilmCard: React.FC<IFilmCard> = ({ film }) => {
         </Link>
       </div>
 
-      {/* Cuadro inferior (visibilidad en móvil) */}
+      
       <div className="absolute bottom-full space-x-2 left-0 right-0 transition-all duration-300 transform translate-y-full bg-white rounded-lg shadow-lg h-20 opacity-0 group-hover:-translate-y-0 group-hover:opacity-100 flex items-center justify-center z-20 rounded-md group-hover:rounded-t-lg group-hover:rounded-b-none hidden md:flex">
         <div className="flex space-x-6 text-black justify-center items-center">
           <div className="flex space-x-2 flex-col justify-center items-center">

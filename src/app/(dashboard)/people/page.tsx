@@ -2,45 +2,22 @@
 import TopMenu from "@/src/components/dashboard/TopMenu";
 import PersonCard2 from "@/src/components/people/PersonCard2";
 import { getPeople } from "../../../actions/people/get-people";
-import { useEffect, useState } from "react";
-import { IPeople } from "@/src/interfaces/IPeople";
-import {
-  Pagination,
-  PaginationItem,
-  PaginationList,
-  PaginationNavigator,
-} from "keep-react";
-import { CaretLeft, CaretRight } from "phosphor-react";
+import {  useState } from "react";
+import { useData } from "@/src/hook/useData";
+import LoadingCard from "@/src/components/LoadingCard";
+import PaginationComponent from "@/src/components/PaginationComponent";
 
 const ITEMS_PER_PAGE = 5; 
 
 export default function PeoplePage() {
-  const [peopleData, setPeopleData] = useState<IPeople[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getPeople();
-      setPeopleData(data);
-    }
-    fetchData();
-  }, []);
-
-  
-  const filteredPeople = peopleData.filter((person) =>
-    person.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  
-  const totalPages = Math.ceil(filteredPeople.length / ITEMS_PER_PAGE);
-
-  
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentPeople = filteredPeople.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
+  const {
+    loading,
+    currentData: currentPeople,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+  } = useData(getPeople, searchTerm, ITEMS_PER_PAGE);
 
   return (
     <div
@@ -72,45 +49,23 @@ export default function PeoplePage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-y-4 md:gap-y-[102px] gap-x-10 justify-center items-center mt-6 md:mt-[90px] animate__animated animate__zoomIn animate__delay-0.3s">
-            {currentPeople.map((person, index) => (
-              <PersonCard2 key={index} person={person} />
-            ))}
+            {loading
+              ? Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+                  <LoadingCard key={index} /> 
+                ))
+              : currentPeople.map((person, index) => (
+                  <PersonCard2 key={index} person={person} />
+                ))}
           </div>
 
-          
-          <div className="flex justify-center mt-[110px]">
-            <Pagination shape="rounded">
-              <PaginationNavigator
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              >
-                <CaretLeft size={18} />
-                Anterior
-              </PaginationNavigator>
-              <PaginationList>
-                {Array.from({ length: totalPages }, (_, index) => {
-                  const isActive = currentPage === index + 1;
-                  return (
-                    <PaginationItem
-                      key={index}
-                      active={isActive}
-                      className={isActive ? "text-blue-500" : "text-gray-300"} 
-                      onClick={() => setCurrentPage(index + 1)}
-                    >
-                      {index + 1}
-                    </PaginationItem>
-                  );
-                })}
-              </PaginationList>
-              <PaginationNavigator
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-              >
-                Siguiente
-                <CaretRight size={18} />
-              </PaginationNavigator>
-            </Pagination>
-          </div>
+          {!loading && (
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+              color="blue"
+            />
+          )}
         </div>
       </div>
     </div>

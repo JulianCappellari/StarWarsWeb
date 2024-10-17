@@ -1,47 +1,23 @@
 "use client";
 import TopMenu from "@/src/components/dashboard/TopMenu";
-import { useEffect, useState } from "react";
-import { IStarship } from "@/src/interfaces/IStarship";
+import { useState } from "react";
 import { getStarship } from "@/src/actions/starships/get-starships";
 import StarshipCard from "@/src/components/startships/StarshipCard";
-import {
-  Pagination,
-  PaginationItem,
-  PaginationList,
-  PaginationNavigator,
-} from "keep-react";
-import { CaretLeft, CaretRight } from "phosphor-react";
+
+import PaginationComponent from "@/src/components/PaginationComponent";
+import { useData } from "@/src/hook/useData";
 
 const ITEMS_PER_PAGE = 5; 
 
 export default function StarshipsPage() {
-  const [starshipsData, setStarshipsData] = useState<IStarship[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getStarship();
-      setStarshipsData(data);
-    }
-    fetchData();
-  }, []);
-
-  
-  const filteredStarships = starshipsData.filter((starship) =>
-    starship.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-  );
-
-  
-  const totalPages = Math.ceil(filteredStarships.length / ITEMS_PER_PAGE);
-
-  
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentStarships = filteredStarships.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
-
+  const {
+    loading,
+    currentData: currentStarships,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+  } = useData(getStarship, searchTerm, ITEMS_PER_PAGE);
   return (
     <div
       className="flex min-h-screen bg-cover bg-center relative"
@@ -76,39 +52,14 @@ export default function StarshipsPage() {
           </div>
 
           
-          <div className="flex justify-center mt-[110px]">
-            <Pagination shape="rounded">
-              <PaginationNavigator
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              >
-                <CaretLeft size={18} />
-                Anterior
-              </PaginationNavigator>
-              <PaginationList>
-                {Array.from({ length: totalPages }, (_, index) => {
-                  const isActive = currentPage === index + 1;
-                  return (
-                    <PaginationItem
-                      key={index}
-                      active={isActive}
-                      className={isActive ? "text-orange-500" : "text-gray-300"} 
-                      onClick={() => setCurrentPage(index + 1)}
-                    >
-                      {index + 1}
-                    </PaginationItem>
-                  );
-                })}
-              </PaginationList>
-              <PaginationNavigator
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-              >
-                Siguiente
-                <CaretRight size={18} />
-              </PaginationNavigator>
-            </Pagination>
-          </div>
+          {!loading && (
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+              color="orange"
+            />
+          )}
         </div>
       </div>
     </div>
